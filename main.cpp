@@ -71,9 +71,8 @@ void Initialize() {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 	// Load player image
-	playerTextureID = LoadTexture("ctg.png");
-	playerTextureID_2 = LoadTexture("ctg.png");
-
+	playerTextureID = LoadTexture("robot_greenJump.png");
+	playerTextureID_2 = LoadTexture("robot_yellowDrive1.png");
 
 	// Enable blending 
 	glEnable(GL_BLEND);
@@ -119,18 +118,18 @@ void Update() {
 	float deltaTime = ticks - lastTicks; 
 	lastTicks = ticks; 
 	
-	player_x += 1.0 * deltaTime;  
+	player_x += 0.3 * deltaTime;  
 	player_rotate += 45.0 * deltaTime; 
 
 	modelMatrix = glm::mat4(1.0f); 
-	// modelMatrix_2 = glm::mat4(1.0f); 
+	modelMatrix_2 = glm::mat4(1.0f); 
 
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(player_x, player_x, 0.0f)); 
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
 
-	// modelMatrix_2 = glm::rotate(modelMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-	// modelMatrix_2 = glm::translate(modelMatrix, glm::vec3(player_x, player_x, 0.0f));
-	// modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 1.0f)); 
+	modelMatrix_2 = glm::rotate(modelMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
+	modelMatrix_2 = glm::translate(modelMatrix, glm::vec3(player_x, player_x, 0.0f));
+	// modelMatrix_2 = glm::scale(modelMatrix, glm::vec3(2.0f, 2.0f, 1.0f)); 
 
 }
 
@@ -139,32 +138,36 @@ void Render() {
 
 	program.SetModelMatrix(modelMatrix);
 	program.SetModelMatrix(modelMatrix_2);
-	
 
 	float vertices[] = { -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5 };
 	float texCoords[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 }; 
+
+	float vertices_2[] = { -1.5, -1.5, -0.5, -1.5, -0.5, -0.5, -1.5, -1.5, -0.5, -0.5, -1.5, -0.5 };
+	float texCoords_2[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 	
-	// /* for the textured images
+	// for playerTextureID
 	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
 	glEnableVertexAttribArray(program.positionAttribute);
 	glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
 	glEnableVertexAttribArray(program.texCoordAttribute); 
 
 	glBindTexture(GL_TEXTURE_2D, playerTextureID);
-	glBindTexture(GL_TEXTURE_2D, playerTextureID_2);
 	glDrawArrays(GL_TRIANGLES, 0, 6); 
 
 	glDisableVertexAttribArray(program.positionAttribute); 
 	glDisableVertexAttribArray(program.texCoordAttribute); 
-	// */
 
-	/* for the triangles
-	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
+	// for playerTextureID_2
 	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices_2);
 	glEnableVertexAttribArray(program.positionAttribute);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords_2);
+	glEnableVertexAttribArray(program.texCoordAttribute);
+
+	glBindTexture(GL_TEXTURE_2D, playerTextureID_2);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
 	glDisableVertexAttribArray(program.positionAttribute);
-	*/
+	glDisableVertexAttribArray(program.texCoordAttribute);
 
 	SDL_GL_SwapWindow(displayWindow);
 }
