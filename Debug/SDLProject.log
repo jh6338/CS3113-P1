@@ -1,4 +1,4 @@
 ﻿  main.cpp
-C:\Users\jhuan\Desktop\CS3113-master\CS3113-P1\SDLProject\main.cpp(119,29): warning C4244:  '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\jhuan\Desktop\CS3113-master\CS3113-P1\SDLProject\main.cpp(120,35): warning C4244:  '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\jhuan\Desktop\CS3113-master\CS3113-P1\SDLProject\main.cpp(122,29): warning C4244:  '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\jhuan\Desktop\CS3113-master\CS3113-P1\SDLProject\main.cpp(123,35): warning C4244:  '+=': conversion from 'double' to 'float', possible loss of data
   SDLProject.vcxproj -> C:\Users\jhuan\Desktop\CS3113-master\CS3113-P1\SDLProject\Debug\SDLProject.exe

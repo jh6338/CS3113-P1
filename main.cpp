@@ -39,6 +39,7 @@ float player_rotate = 0;
 
 GLuint LoadTexture(const char* filepath);
 GLuint playerTextureID; 
+GLuint playerTextureID_2; 
 
 void Initialize() {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -52,9 +53,9 @@ void Initialize() {
 
 	glViewport(0, 0, 640, 480);
 
-	program.Load("shaders/vertex.glsl", "shaders/fragment.glsl"); // for the triangles
+	// program.Load("shaders/vertex.glsl", "shaders/fragment.glsl"); // for the triangles
 	// Load the shaders for handling textures 
-	// program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured/glsl"); // for the textures 
+	program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl"); // for the textures 
 
 	viewMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::mat4(1.0f);
@@ -71,6 +72,8 @@ void Initialize() {
 
 	// Load player image
 	playerTextureID = LoadTexture("ctg.png");
+	playerTextureID_2 = LoadTexture("ctg.png");
+
 
 	// Enable blending 
 	glEnable(GL_BLEND);
@@ -120,9 +123,13 @@ void Update() {
 	player_rotate += 45.0 * deltaTime; 
 
 	modelMatrix = glm::mat4(1.0f); 
-	modelMatrix_2 = glm::mat4(1.0f); 
+	// modelMatrix_2 = glm::mat4(1.0f); 
+
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(player_x, player_x, 0.0f)); 
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	// modelMatrix_2 = glm::rotate(modelMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
+	// modelMatrix_2 = glm::translate(modelMatrix, glm::vec3(player_x, player_x, 0.0f));
 	// modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 1.0f)); 
 
 }
@@ -131,33 +138,33 @@ void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	program.SetModelMatrix(modelMatrix);
-
-	// float vertices[] = { -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5 };
-	// float texCoords[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 }; 
-
-	float vertices[] = { 0.5f, -0.5f, 0.0f, 0.5f, -0.5f, -0.5f };
-	float vertices_2[] = { 0.5f, -0.5f, 0.0f, 0.5f, -0.5f, -0.5f };
+	program.SetModelMatrix(modelMatrix_2);
 	
-	/* for the textured images
+
+	float vertices[] = { -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5 };
+	float texCoords[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 }; 
+	
+	// /* for the textured images
 	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
 	glEnableVertexAttribArray(program.positionAttribute);
 	glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
 	glEnableVertexAttribArray(program.texCoordAttribute); 
 
 	glBindTexture(GL_TEXTURE_2D, playerTextureID);
+	glBindTexture(GL_TEXTURE_2D, playerTextureID_2);
 	glDrawArrays(GL_TRIANGLES, 0, 6); 
 
 	glDisableVertexAttribArray(program.positionAttribute); 
 	glDisableVertexAttribArray(program.texCoordAttribute); 
-	*/
+	// */
 
-	// /* for the triangles
+	/* for the triangles
 	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
 	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices_2);
 	glEnableVertexAttribArray(program.positionAttribute);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(program.positionAttribute);
-	// */
+	*/
 
 	SDL_GL_SwapWindow(displayWindow);
 }
